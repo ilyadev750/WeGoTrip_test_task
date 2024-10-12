@@ -1,5 +1,5 @@
 from django.db import models
-from orders.models import Order
+
 
 class Payment(models.Model):
     STATUS_CHOICES = [
@@ -11,10 +11,18 @@ class Payment(models.Model):
         ("карта", "Карта")
     ]
 
-    total_sum = models.IntegerField(verbose_name='Сумма платежа')
-    status = models.CharField(verbose_name='Статус заказа', choices=STATUS_CHOICES, max_length=100)
-    payment_type = models.CharField(verbose_name='Тип оплаты', choices=PAYMENT_CHOICES, max_length=100)
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Заказ")
+    total_sum = models.IntegerField(
+        verbose_name='Сумма платежа')
+
+    status = models.CharField(
+        verbose_name='Статус платежа',
+        choices=STATUS_CHOICES,
+        max_length=100)
+
+    payment_type = models.CharField(
+        verbose_name='Тип оплаты',
+        choices=PAYMENT_CHOICES,
+        max_length=100)
 
     class Meta:
         verbose_name = 'Платеж'
