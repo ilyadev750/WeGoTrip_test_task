@@ -48,4 +48,5 @@ class OrderView(APIView):
 
         return Response(status=201,
                         data={'Успех': "Заказ успешно создан!",
-                              'ID нового заказа': order.pk})
+                              'ID нового заказа': order.pk,
+                              'Сумма заказа': order.total_sum})

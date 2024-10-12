@@ -24,7 +24,9 @@ class PaymentView(APIView):
 
         return Response(status=201,
                         data={'Успех!': "Платеж успешно создан!",
-                              'ID платежа': payment.pk})
+                              'ID платежа': payment.pk,
+                              'Тип платежа': payment.payment_type,
+                              'Сумма': payment.total_sum})
 
 
 class SetPaymentAsPaid(APIView):
@@ -37,4 +39,5 @@ class SetPaymentAsPaid(APIView):
 
         return Response(status=201,
                         data={'Успех!': "Платеж успешно оплачен!",
-                              'ID платежа': payment.pk})
+                              'ID платежа': payment.pk,
+                              'Тип платежа': payment.payment_type})
