@@ -4,6 +4,8 @@ from payments.models import Payment
 
 
 class Order(models.Model):
+    """ Модель заказа """
+
     STATUS_CHOICES = [
         ("создан", "Создан"),
         ("подтвержден", "Подтвержден"),

@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Payment(models.Model):
+    """ Модель платежа """
     STATUS_CHOICES = [
         ("не оплачен", "Не оплачен"),
         ("оплачен", "Оплачен"),

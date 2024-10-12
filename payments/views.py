@@ -6,6 +6,15 @@ from rest_framework.response import Response
 
 
 class PaymentView(APIView):
+    """ 
+        Создать новый платеж, привязать 
+        его к заказу. Пример тела запроса:
+        {
+            "order_id": "11",
+            "payment_type": "наличные"
+        }
+    """
+
     parser_classes = [JSONParser]
 
     def post(self, request):
@@ -19,6 +28,7 @@ class PaymentView(APIView):
 
 
 class SetPaymentAsPaid(APIView):
+    """ Поменять стаус платежа на "оплачен" """
 
     def patch(self, request, payment_id):
         payment = Payment.objects.get(pk=payment_id)

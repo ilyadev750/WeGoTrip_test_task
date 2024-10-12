@@ -14,6 +14,7 @@ load_dotenv()
 
 
 class OrderForm(forms.ModelForm):
+    """ Кастомная форма заказа для админ-панели """
     class Meta:
         model = Order
         fields = '__all__'
@@ -26,6 +27,7 @@ class OrderForm(forms.ModelForm):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    """ Кастомная настройка для админ-панели """
     form = OrderForm
 
     list_display = ('id',
@@ -41,6 +43,9 @@ class OrderAdmin(admin.ModelAdmin):
                         object_id,
                         form_url='',
                         extra_context=None):
+        """ Изменение формы. Если связанный платеж оплачен
+        и заказ не подтвержден, то будет добавлена 
+        кнопка подтверждения заказа."""
 
         extra_context = extra_context or {}
         object = Order.objects.get(pk=object_id)
@@ -57,6 +62,9 @@ class OrderAdmin(admin.ModelAdmin):
             extra_context)
 
     def response_change(self, request, obj):
+        """ Настройка ответа от сервера
+        в случае, если администратор нажмет на 
+        кнопку подтверждения заказа"""
 
         if "_custom_button" in request.POST:
             obj.status = 'подтвержден'
@@ -79,6 +87,8 @@ class OrderAdmin(admin.ModelAdmin):
             return super().response_change(request, obj)
 
     def payment(self, obj):
+        """ Вернуть ссылку на платеж для удобного
+        перехода """
         if obj.payment_id:
 
             url = reverse('admin:payments_payment_change',
@@ -91,6 +101,10 @@ class OrderAdmin(admin.ModelAdmin):
             return 'Не назначен'
 
     def conformation(self, obj):
+        """ Возврат статуса заказа, 
+        ссылки на переход к заказу, если
+        его можно подтвердить """
+
         if obj.payment_id:
 
             status = obj.payment_id.status

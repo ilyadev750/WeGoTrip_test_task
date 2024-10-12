@@ -6,6 +6,7 @@ from rest_framework.exceptions import ValidationError
 
 
 class PaymentSerializer(serializers.Serializer):
+    """ Сериализатор платежа """
     order_id = serializers.IntegerField(
         required=True)
 
@@ -14,7 +15,9 @@ class PaymentSerializer(serializers.Serializer):
         max_length=50)
 
     def create(self, request):
-        """ Создать новый платеж, привязать его к заказу """
+        """ Создать новый платеж, привязать 
+        его к заказу. """
+
         try:
             order = Order.objects.get(
                 pk=int(self.validated_data.get("order_id"))

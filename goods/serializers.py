@@ -3,6 +3,7 @@ from .models import Good
 
 
 class GoodSerializer(serializers.ModelSerializer):
+    """ Сериализатор товара """
 
     class Meta:
         model = Good
